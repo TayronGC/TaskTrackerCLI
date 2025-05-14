@@ -55,19 +55,35 @@ class Program
                         break;
 
                     case "update":
-                        int id = Convert.ToUInt16(inputs[1]);
-                        taskManager.UpdateTask(id, inputs[2]);
-                        break;
+                        {
+                            int id = Convert.ToUInt16(inputs[1]);
+                            taskManager.UpdateTask(id, inputs[2]);
+                            break;
+                        }
                     case "delete":
-                        int id2 = Convert.ToUInt16(inputs[1]);
-                        taskManager.DeleteTask(id2);
-                        break;
+                        {
+                            int id = Convert.ToUInt16(inputs[1]);
+                            taskManager.DeleteTask(id);
+                            break;
+                        }
+                        
                     case "mark-in-progress":
-
-                        break;
+                        {
+                            int id = Convert.ToUInt16(inputs[1]);
+                            Status status = Status.InProgress;
+                            taskManager.Marking(id, status);
+                            break;
+                        }
 
                     case "mark-done":
-
+                        {
+                            int id = Convert.ToUInt16(inputs[1]);
+                            Status status = Status.Done;
+                            taskManager.Marking(id, status);
+                            break;
+                        }
+                    case "list done"://Mal
+                        taskManager.ListByStatus(Status.Done);
                         break;
                     default:
                         Console.WriteLine("Unknown command");

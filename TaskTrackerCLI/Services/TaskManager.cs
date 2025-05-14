@@ -259,48 +259,77 @@ namespace TaskTrackerCLI.Services
         }
 
 
-        public void Marking(int id, string status)
-        {
-            if (id > 0)
-            {
-                var taskToMarking = tasks.FirstOrDefault(t => t.Id == id);
-                if (taskToMarking != null)
-                {
-                    if (status == "mark-in-progress")
-                    {
-                        taskToMarking.Status = Status.InProgress;
-                        upJson(tasks);
+        //public void Marking(int id, string status)
+        //{
+        //    if (id > 0)
+        //    {
+        //        var taskToMarking = tasks.FirstOrDefault(t => t.Id == id);
+        //        if (taskToMarking != null)
+        //        {
+        //            if (status == "mark-in-progress")
+        //            {
+        //                taskToMarking.Status = Status.InProgress;
+        //                upJson(tasks);
 
-                    }
-                    else if (status == "mark-done")
-                    {
-                        taskToMarking.Status = Status.Done;
-                        upJson(tasks);
-                    }
-                }
+        //            }
+        //            else if (status == "mark-done")
+        //            {
+        //                taskToMarking.Status = Status.Done;
+        //                upJson(tasks);
+        //            }
+        //        }
+        //    }
+        //}
+
+        public void Marking(int id, Status status)
+        {
+            if (id <= 0)
+            {
+                Console.WriteLine("Invalid ID");
+                return;
             }
+
+            var task = tasks.FirstOrDefault(t => t.Id == id);
+            if (task == null)
+            {
+                Console.WriteLine("Task not found");
+                return;
+            }
+
+            task.Status = status;
+            upJson(tasks);
+            Console.WriteLine($"Task ID {id} status changed to {status}");
         }
 
-        public void Marking2(int id)
+        public void ListByStatus(Status status)
         {
-            if (id > 0)
+            tasks = LoadTasks();
+            //var taskss= LoadTasks();//Otra forma
+            if (tasks.Count > 0)
             {
-                var taskToMarking = tasks.FirstOrDefault(t => t.Id == id);
-                if (taskToMarking != null)
+                foreach (TaskItem item in tasks)
                 {
-                    //if (status == "mark-in-progress")
-                    //{
-                    //    taskToMarking.Status = Status.InProgress;
-                    //    upJson(tasks);
+                    if (item.Status == status) 
+                    { 
 
-                    //}
-                    //else if (status == "mark-done")
-                    //{
-                    //    taskToMarking.Status = Status.Done;
-                    //    upJson(tasks);
-                    //}
+                        Console.WriteLine(item.Id);
+                        Console.WriteLine(item.Description);
+                        Console.WriteLine(item.Status);
+                        Console.WriteLine(item.CreatedAt);
+                        Console.WriteLine(item.UpdatedAt);
+                        Console.WriteLine("-----");
+                    }
+                    else
+                    {
+                        Console.WriteLine("noooo");
+                    }
                 }
             }
+            else
+            {
+                Console.WriteLine("There are no tasks");
+            }
+
         }
 
         //private void LoadTask()
