@@ -51,7 +51,26 @@ class Program
                         //Console.WriteLine("Task added successfully (ID: 1)");
                         break;
                     case "list":
-                        taskManager.readJson();
+                        if(inputs.Length == 2)
+                        {
+                            if (inputs[1] == "done")
+                            {
+                                taskManager.ListByStatus(Status.Done);
+                            }
+                            else if (inputs[1] == "in-progress")
+                            {
+                                taskManager.ListByStatus(Status.InProgress);
+                            }
+                            else if (inputs[1] == "todo")
+                            {
+                                taskManager.ListByStatus(Status.ToDo);
+                            }
+                        }
+                        else if(inputs.Length == 1)
+                        {
+                            taskManager.readJson();
+                        }
+                        
                         break;
 
                     case "update":
@@ -82,18 +101,29 @@ class Program
                             taskManager.Marking(id, status);
                             break;
                         }
-                    case "list done"://Mal
-                        taskManager.ListByStatus(Status.Done);
+                    //case "list done"://Mal
+                    //    taskManager.ListByStatus(Status.Done);
+                    //    break;
+                    case "help":
+                        Console.WriteLine("add \"task\"");
+                        Console.WriteLine("update Id \"task\"");
+                        Console.WriteLine("delete Id");
+                        Console.WriteLine("mark-in-progress Id");
+                        Console.WriteLine("mark-done Id");
+                        Console.WriteLine("list");
+                        Console.WriteLine("list done\nlist todo\nlist in-progress");
                         break;
                     default:
-                        Console.WriteLine("Unknown command");
+                        Console.WriteLine("Unknown command, type \"help\" to see the commands");
                         break;
 
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine("Please type something, also type \"help\" to see the commands");
+                Console.WriteLine(ex.Message);
+                //Console.WriteLine(ex.ToString());
             }
             
             //taskManager.addTask();

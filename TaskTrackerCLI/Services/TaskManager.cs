@@ -319,10 +319,7 @@ namespace TaskTrackerCLI.Services
                         Console.WriteLine(item.UpdatedAt);
                         Console.WriteLine("-----");
                     }
-                    else
-                    {
-                        Console.WriteLine("noooo");
-                    }
+                    
                 }
             }
             else
